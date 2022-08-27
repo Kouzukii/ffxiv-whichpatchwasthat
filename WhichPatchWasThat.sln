@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemPatch", "ItemPatch\ItemPatch.csproj", "{A28CBE99-B04A-4137-A257-2305A138007A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhichPatchWasThat", "WhichPatchWasThat\WhichPatchWasThat.csproj", "{A28CBE99-B04A-4137-A257-2305A138007A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemPatch-Update", "ItemPatch-Update\ItemPatch-Update.csproj", "{44573D91-1342-438D-B3CF-CABB3C169BF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhichPatchWasThat-Update", "WhichPatchWasThat-Update\WhichPatchWasThat-Update.csproj", "{44573D91-1342-438D-B3CF-CABB3C169BF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

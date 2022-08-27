@@ -3,15 +3,15 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Plugin;
 
-namespace ItemPatch;
+namespace WhichPatchWasThat;
 
-public class ItemPatchPlugin : IDalamudPlugin {
-    public string Name => "Item Patch";
+public class WhichPatchWasThatPlugin : IDalamudPlugin {
+    public string Name => "Which Patch Was That?";
 
     internal GameGui GameGui { get; }
     internal Hooks Hooks { get; }
 
-    public ItemPatchPlugin(GameGui gameGui) {
+    public WhichPatchWasThatPlugin(GameGui gameGui) {
         GameGui = gameGui;
         Hooks = new Hooks(this);
     }

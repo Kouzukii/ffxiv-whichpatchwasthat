@@ -6,10 +6,10 @@ using Dalamud.Memory;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 
-namespace ItemPatch;
+namespace WhichPatchWasThat;
 
 public class Hooks : IDisposable {
-    private readonly ItemPatchPlugin plugin;
+    private readonly WhichPatchWasThatPlugin plugin;
 
     private unsafe delegate void* AddonOnUpdate(AtkUnitBase* atkUnitBase, NumberArrayData* nums, StringArrayData* strings);
 
@@ -18,7 +18,7 @@ public class Hooks : IDisposable {
 
     private readonly IntPtr mem = Marshal.AllocHGlobal(4096);
 
-    public Hooks(ItemPatchPlugin plugin) {
+    public Hooks(WhichPatchWasThatPlugin plugin) {
         this.plugin = plugin;
         SignatureHelper.Initialise(this);
         ItemDetailOnUpdateHook?.Enable();

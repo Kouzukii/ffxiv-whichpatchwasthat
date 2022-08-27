@@ -1,10 +1,10 @@
-# FFXIV Item Patch
+# FFXIV Which Patch Was That?
 
 Quickly figure out the patch your items were released in.
 
 Never carry around old useless crafting materials again!
 
-![preview](ItemPatch/images/image1.png)
+![preview](WhichPatchWasThat/images/image1.png)
 
 
 ## Installation

@@ -1,9 +1,9 @@
-name: Item Patch
+name: Which Patch Was That?
 author: Kouzukii
 punchline: Quickly check the patch an item was released in!
 description: |
   Whenever you mouseover an item, the tooltip will show you the patch the item was released in.
-  Helps you quickly figure out which crafting materials are probably not worth keeping around anymore.
+  Never carry around old useless crafting materials again!
 repo_url: "https://github.com/kouzukii/ffxiv-itempatch"
 tags: [items, patch]
 category_tags: [ui, utility]

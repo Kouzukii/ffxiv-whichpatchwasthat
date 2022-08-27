@@ -57,12 +57,12 @@ foreach (var (_, cls) in clauses) {
     }
 }
 
-var file = File.CreateText("../../../../../ItemPatch/ItemPatchMapper.cs");
+var file = File.CreateText("../../../../../WhichPatchWasThat/ItemPatchMapper.cs");
 
-await file.WriteLineAsync("// File created by ItemPatch-Update");
+await file.WriteLineAsync("// File created by WhichPatchWasThat-Update");
 await file.WriteLineAsync("// Do not modify manually");
 await file.WriteLineAsync();
-await file.WriteLineAsync("namespace ItemPatch;");
+await file.WriteLineAsync("namespace WhichPatchWasThat;");
 await file.WriteLineAsync();
 await file.WriteLineAsync("public static class ItemPatchMapper {");
 await file.WriteLineAsync("    public static string? GetPatch(ulong id) {");

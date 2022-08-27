@@ -1,7 +1,7 @@
-// File created by ItemPatch-Update
+// File created by WhichPatchWasThat-Update
 // Do not modify manually
 
-namespace ItemPatch;
+namespace WhichPatchWasThat;
 
 public static class ItemPatchMapper {
     public static string? GetPatch(ulong id) {
