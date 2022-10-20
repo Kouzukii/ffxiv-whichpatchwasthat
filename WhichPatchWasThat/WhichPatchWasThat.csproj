@@ -12,9 +12,7 @@
     <!-- Assembly Configuration -->
     <PropertyGroup>
         <AssemblyName>WhichPatchWasThat</AssemblyName>
-        <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>1.0.0.0</FileVersion>
-        <InformationalVersion>1.0.0.0</InformationalVersion>
+        <Version>1.1.0.0</Version>
     </PropertyGroup>
 
     <!-- Build Configuration -->

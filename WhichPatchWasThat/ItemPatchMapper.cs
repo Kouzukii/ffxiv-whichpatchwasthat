@@ -223,8 +223,10 @@ public static class ItemPatchMapper {
             case >= 7568 and <= 7798:
             case >= 7802 and <= 7862:
                 return "2.2";
-            case >= 7863 and <= 7885: return "2.28";
-            case >= 7360 and <= 7443: return "2.25";
+            case >= 7863 and <= 7885:
+                return "2.28";
+            case >= 7360 and <= 7443:
+                return "2.25";
             case 27:
             case 6206:
             case >= 7102 and <= 7107:
@@ -1003,7 +1005,8 @@ public static class ItemPatchMapper {
             case 17576:
             case >= 17627 and <= 17629:
                 return "3.56";
-            case >= 15919 and <= 15920: return "3.57";
+            case >= 15919 and <= 15920:
+                return "3.57";
             case 35:
             case 16041:
             case >= 17844 and <= 17846:
@@ -1968,8 +1971,59 @@ public static class ItemPatchMapper {
             case 36862:
             case 36905:
             case 36915:
-            case >= 37549 and <= 38714:
+            case >= 37549 and <= 37853:
+            case >= 37856 and <= 38222:
+            case >= 38228 and <= 38275:
+            case >= 38348 and <= 38399:
+            case >= 38421 and <= 38428:
+            case >= 38433 and <= 38434:
+            case >= 38436 and <= 38444:
+            case >= 38446 and <= 38450:
+            case >= 38454 and <= 38455:
+            case >= 38457 and <= 38460:
+            case >= 38463 and <= 38464:
+            case >= 38467 and <= 38532:
+            case 38536:
+            case 38538:
+            case >= 38540 and <= 38558:
+            case >= 38560 and <= 38569:
+            case >= 38571 and <= 38585:
+            case 38587:
+            case >= 38589 and <= 38591:
+            case >= 38593 and <= 38594:
+            case 38599:
+            case >= 38604 and <= 38620:
+            case >= 38622 and <= 38631:
+            case >= 38633 and <= 38638:
+            case >= 38640 and <= 38690:
+            case >= 38697 and <= 38714:
                 return "6.2";
+            case 37854:
+            case >= 38223 and <= 38227:
+            case >= 38276 and <= 38347:
+            case >= 38400 and <= 38420:
+            case >= 38429 and <= 38432:
+            case 38435:
+            case 38445:
+            case >= 38451 and <= 38452:
+            case 38456:
+            case >= 38461 and <= 38462:
+            case >= 38465 and <= 38466:
+            case >= 38533 and <= 38535:
+            case 38537:
+            case 38539:
+            case 38559:
+            case 38570:
+            case 38586:
+            case 38588:
+            case 38592:
+            case >= 38595 and <= 38598:
+            case >= 38600 and <= 38603:
+            case 38621:
+            case 38632:
+            case 38639:
+            case 38691:
+                return "6.25";
         }
 
         return null;
