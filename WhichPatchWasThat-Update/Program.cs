@@ -57,7 +57,7 @@ foreach (var (_, cls) in clauses) {
     }
 }
 
-var file = File.CreateText("../../../../../WhichPatchWasThat/ItemPatchMapper.cs");
+await using var file = File.CreateText("../../../../../WhichPatchWasThat/ItemPatchMapper.cs");
 
 await file.WriteLineAsync("// File created by WhichPatchWasThat-Update");
 await file.WriteLineAsync("// Do not modify manually");
@@ -83,4 +83,3 @@ await file.WriteLineAsync();
 await file.WriteLineAsync("        return null;");
 await file.WriteLineAsync("    }");
 await file.WriteLineAsync("}");
-file.Close();
