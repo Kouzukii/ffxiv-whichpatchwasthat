@@ -37,4 +37,31 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
         seStr.Payloads.Insert(2, new UIForegroundPayload(0));
         return true;
     }
+
+    private string? GetActionPatch() {
+        var item = (int)GameGui.HoveredAction.ActionKind switch {
+            30 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
+            35 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
+            50 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
+            _ => null
+        };
+        return item is { } id ? ItemPatchMapper.GetPatch(id) : null;
+    }
+
+    public bool UpdateActionToolTip(SeString seStr) {
+        if (seStr.TextValue.StartsWith("["))
+            return false;
+        var patch = GetActionPatch();
+        if (patch == null)
+            return false;
+        if (seStr.Payloads.Count >= 1) {
+            seStr.Payloads.Add(new TextPayload("   "));
+        }
+
+        seStr.Payloads.Add(new UIForegroundPayload(3));
+        seStr.Payloads.Add(new TextPayload($"[Patch {patch}]"));
+        seStr.Payloads.Add(new UIForegroundPayload(0));
+
+        return true;
+    }
 }

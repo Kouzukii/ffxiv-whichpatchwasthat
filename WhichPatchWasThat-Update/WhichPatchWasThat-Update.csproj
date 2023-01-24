@@ -10,4 +10,8 @@
         <Platforms>x64</Platforms>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="30.0.1" />
+    </ItemGroup>
+
 </Project>
