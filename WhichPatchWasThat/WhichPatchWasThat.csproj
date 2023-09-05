@@ -12,7 +12,7 @@
     <!-- Assembly Configuration -->
     <PropertyGroup>
         <AssemblyName>WhichPatchWasThat</AssemblyName>
-        <Version>1.4.0.0</Version>
+        <Version>1.4.1.0</Version>
     </PropertyGroup>
 
     <!-- Build Configuration -->
@@ -71,19 +71,6 @@
     
     <!-- NuGet Packages -->
     <ItemGroup>
-        <PackageReference Include="DalamudPackager" Version="2.1.10" />
+        <PackageReference Include="DalamudPackager" Version="2.1.11" />
     </ItemGroup>
-
-    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-        <OutputPath>$(AppData)\XIVLauncher\devPlugins\$(AssemblyName)</OutputPath>
-    </PropertyGroup>
-
-    <!-- Dalamud Packager Task-->
-    <Target Name="DalamudPackageDebug" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
-        <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(AppData)\XIVLauncher\devPlugins\$(AssemblyName)" AssemblyName="$(AssemblyName)" MakeZip="false" VersionComponents="4" />
-    </Target>
-
-    <Target Name="DalamudPackageRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-        <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(TargetDir)" AssemblyName="$(AssemblyName)" MakeZip="true" Exclude="$(AssemblyName).pdb" VersionComponents="4" />
-    </Target>
 </Project>

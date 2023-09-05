@@ -40,9 +40,9 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     private string? GetActionPatch() {
         var item = (int)GameGui.HoveredAction.ActionKind switch {
-            30 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
-            35 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
-            50 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
+            32 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
+            37 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
+            52 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
             _ => null
         };
         return item is { } id ? ItemPatchMapper.GetPatch(id) : null;

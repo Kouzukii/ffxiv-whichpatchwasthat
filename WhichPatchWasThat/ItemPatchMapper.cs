@@ -2097,10 +2097,22 @@ public static class ItemPatchMapper {
                 return "6.35";
             case 45:
             case >= 33681 and <= 33683:
+            case 36861:
             case >= 39303 and <= 39307:
             case 39496:
-            case >= 39630 and <= 40764:
+            case >= 39630 and <= 40385:
+            case >= 40387 and <= 40499:
+            case >= 40502 and <= 40663:
+            case >= 40665 and <= 40704:
+            case >= 40706 and <= 40754:
+            case >= 40756 and <= 40764:
                 return "6.4";
+            case 40386:
+            case >= 40500 and <= 40501:
+            case 40664:
+            case 40705:
+            case 40755:
+                return "6.48";
         }
 
         return null;
