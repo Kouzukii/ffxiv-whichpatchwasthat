@@ -14,6 +14,8 @@ var patches = data!["patch"]!["partialIndex"]!.AsObject().Select(kv => kv.Key).T
 
 var itemSet = new HashSet<uint>();
 var clauses = new Dictionary<string, List<(uint start, uint end)>>();
+var questSet = new HashSet<uint>();
+var questClauses = new Dictionary<string, List<(uint start, uint end)>>();
 
 foreach (var patch in patches) {
     response = await httpClient.GetAsync($"https://garlandtools.org/db/doc/patch/en/2/{patch}.json");
@@ -21,44 +23,54 @@ foreach (var patch in patches) {
     response.Dispose();
 
     foreach (var (patchName, content) in data!["patch"]!["patches"]!.AsObject()) {
-        var patchClauses = new List<(uint start, uint end)>();
-        (uint start, uint end) lastItem = (uint.MaxValue, uint.MaxValue);
+        void Aggregate(string type, IDictionary<string, List<(uint start, uint end)>> dictionary, ISet<uint> set) {
+            var patchClauses = new List<(uint start, uint end)>();
+            (uint start, uint end) last = (uint.MaxValue, uint.MaxValue);
 
-        void Flush() {
-            if (lastItem.start != uint.MaxValue)
-                patchClauses.Add(lastItem);
-        }
+            void Flush() {
+                if (last.start != uint.MaxValue)
+                    patchClauses.Add(last);
+            }
 
-        var itemIds = content!["item"]!.AsArray().Select(i => i!["i"]!.GetValue<uint>()).ToList();
-        itemIds.Sort();
-        foreach (var id in itemIds) {
-            if (itemSet.Add(id)) {
-                if (lastItem is var (_, e) && e == id - 1) {
-                    lastItem.end = id;
-                } else {
-                    Flush();
-                    lastItem = (id, id);
+            var ids = content![type]?.AsArray().Select(i => i!["i"]!.GetValue<uint>()).ToList();
+            if (ids == null) return;
+            ids.Sort();
+            foreach (var id in ids) {
+                if (set.Add(id)) {
+                    if (last is var (_, e) && e == id - 1) {
+                        last.end = id;
+                    } else {
+                        Flush();
+                        last = (id, id);
+                    }
                 }
             }
-        }
 
-        Flush();
-        if (lastItem.start != uint.MaxValue)
-            clauses.Add(patchName, patchClauses);
+            Flush();
+            if (last.start != uint.MaxValue)
+                dictionary.Add(patchName, patchClauses);
+        }
+        
+        Aggregate("item", clauses, itemSet);
+        Aggregate("quest", questClauses, questSet);
     }
 }
 
-foreach (var (_, cls) in clauses) {
-    for (var i = 0; i < cls.Count - 1; i++) {
-        var rangeStart = cls[i].end;
-        var rangeEnd = cls[i + 1].start;
-        if (!itemSet.Any(j => j > rangeStart && j < rangeEnd)) {
-            cls[i] = (cls[i].start, cls[i + 1].end);
-            cls.RemoveAt(i + 1);
-            i--;
+void Simplify(Dictionary<string, List<(uint start, uint end)>> dictionary, IReadOnlyCollection<uint> set) {
+    foreach (var (_, cls) in dictionary) {
+        for (var i = 0; i < cls.Count - 1; i++) {
+            var rangeStart = cls[i].end;
+            var rangeEnd = cls[i + 1].start;
+            if (!set.Any(j => j > rangeStart && j < rangeEnd)) {
+                cls[i] = (cls[i].start, cls[i + 1].end);
+                cls.RemoveAt(i + 1);
+                i--;
+            }
         }
     }
 }
+Simplify(clauses, itemSet);
+Simplify(questClauses, questSet);
 
 {
     await using var file = File.CreateText("../../../../../WhichPatchWasThat/ItemPatchMapper.cs");
@@ -78,6 +90,35 @@ foreach (var (_, cls) in clauses) {
                 await file.WriteLineAsync($"            case {start}:");
             else
                 await file.WriteLineAsync($"            case >= {start} and <= {end}:");
+        }
+
+        await file.WriteLineAsync($"                return \"{patch}\";");
+    }
+
+    await file.WriteLineAsync("        }");
+    await file.WriteLineAsync();
+    await file.WriteLineAsync("        return null;");
+    await file.WriteLineAsync("    }");
+    await file.WriteLineAsync("}");
+}
+{
+    await using var file = File.CreateText("../../../../../WhichPatchWasThat/QuestPatchMapper.cs");
+
+    await file.WriteLineAsync("// File created by WhichPatchWasThat-Update");
+    await file.WriteLineAsync("// Do not modify manually");
+    await file.WriteLineAsync();
+    await file.WriteLineAsync("namespace WhichPatchWasThat;");
+    await file.WriteLineAsync();
+    await file.WriteLineAsync("public static class QuestPatchMapper {");
+    await file.WriteLineAsync("    public static string? GetPatch(uint id) {");
+    await file.WriteLineAsync("        switch (id) {");
+
+    foreach (var (patch, cls) in questClauses) {
+        foreach (var (start, end) in cls) {
+            if (start == end)
+                await file.WriteLineAsync($"            case {start ^ (1 << 16)}:");
+            else
+                await file.WriteLineAsync($"            case >= {start ^ (1 << 16)} and <= {end ^ (1 << 16)}:");
         }
 
         await file.WriteLineAsync($"                return \"{patch}\";");
