@@ -10,13 +10,16 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     internal GameGui GameGui { get; }
     internal Hooks Hooks { get; }
+    internal QuestPatch QuestPatch { get; }
 
     public WhichPatchWasThatPlugin(GameGui gameGui) {
         GameGui = gameGui;
         Hooks = new Hooks(this);
+        QuestPatch = new QuestPatch(this);
     }
 
     public void Dispose() {
+        QuestPatch.Dispose();
         Hooks.Dispose();
     }
 
