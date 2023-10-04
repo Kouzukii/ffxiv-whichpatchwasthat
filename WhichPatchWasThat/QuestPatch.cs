@@ -11,7 +11,7 @@ public class QuestPatch : IDisposable {
         this.plugin = plugin;
     }
 
-    public unsafe void AddPatchToJournalAccept(AtkUnitBase* journalAccept) {
+    public static unsafe void AddPatchToJournalAccept(AtkUnitBase* journalAccept) {
         var insertNode = journalAccept->GetNodeById(8);
         if (insertNode == null)
             return;
@@ -36,7 +36,7 @@ public class QuestPatch : IDisposable {
         patchNode->SetText($"Patch {patch}");
     }
 
-    public unsafe void AddPatchToJournalDetail(AtkUnitBase* journalDetail) {
+    public static unsafe void AddPatchToJournalDetail(AtkUnitBase* journalDetail) {
         var insertNode = journalDetail->GetNodeById(9);
         if (insertNode == null)
             return;
