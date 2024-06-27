@@ -3,13 +3,8 @@ using FFXIVClientStructs.FFXIV.Component.GUI;
 
 namespace WhichPatchWasThat;
 
-public class QuestPatch : IDisposable {
-    private readonly WhichPatchWasThatPlugin plugin;
+public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
     private const int NodeId = 58327;
-
-    public QuestPatch(WhichPatchWasThatPlugin plugin) {
-        this.plugin = plugin;
-    }
 
     public static unsafe void AddPatchToJournalAccept(AtkUnitBase* journalAccept) {
         var insertNode = journalAccept->GetNodeById(8);
@@ -31,7 +26,7 @@ public class QuestPatch : IDisposable {
             if (patchNode == null)
                 return;
         }
-        
+
         patchNode->AtkResNode.ToggleVisibility(true);
         patchNode->SetText($"Patch {patch}");
     }
@@ -62,11 +57,11 @@ public class QuestPatch : IDisposable {
         patchNode->SetText($"Patch {patch}");
     }
 
-    
+
     private static unsafe AtkTextNode* FindPatchNode(AtkUnitBase* unitBase) {
         for (var i = 0; i < unitBase->UldManager.NodeListCount; i++) {
             var node = unitBase->UldManager.NodeList[i];
-            if (node == null || node->NodeID != NodeId)
+            if (node == null || node->NodeId != NodeId)
                 continue;
             return (AtkTextNode*)node;
         }
@@ -83,7 +78,7 @@ public class QuestPatch : IDisposable {
             return null;
         var patchNode = IMemorySpace.GetUISpace()->Create<AtkTextNode>();
         patchNode->AtkResNode.Type = NodeType.Text;
-        patchNode->AtkResNode.NodeID = NodeId;
+        patchNode->AtkResNode.NodeId = NodeId;
         patchNode->AtkResNode.NodeFlags = NodeFlags.AnchorLeft | NodeFlags.AnchorTop;
         patchNode->AtkResNode.DrawFlags = 0;
         patchNode->AtkResNode.X = 15;
@@ -118,7 +113,7 @@ public class QuestPatch : IDisposable {
                     var node = atkUnitBase->UldManager.NodeList[n];
                     if (node == null)
                         continue;
-                    if (node->NodeID != NodeId)
+                    if (node->NodeId != NodeId)
                         continue;
                     if (node->ParentNode != null && node->ParentNode->ChildNode == node)
                         node->ParentNode->ChildNode = node->PrevSiblingNode;
