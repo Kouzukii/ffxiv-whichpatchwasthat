@@ -61,7 +61,7 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
         if (args is not AddonRequestedUpdateArgs requestedUpdateArgs) return;
         var numberArrayData = ((NumberArrayData**)requestedUpdateArgs.NumberArrayData)[29];
         var stringArrayData = ((StringArrayData**)requestedUpdateArgs.StringArrayData)[26];
-        if ((numberArrayData->IntArray[2] & 1) == 0) return;
+        if ((numberArrayData->IntArray[3] & 1) == 0) return;
 
         var seStr = GetTooltipString(stringArrayData, 14);
         if (UpdateTooltip(seStr)) {
@@ -80,7 +80,7 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
     }
 
     public bool UpdateTooltip(SeString seStr) {
-        if (seStr.TextValue.StartsWith("["))
+        if (seStr.TextValue.StartsWith('['))
             return false;
 
         var id = GameGui.HoveredItem;
@@ -99,9 +99,9 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     private string? GetActionPatch() {
         var item = (int)GameGui.HoveredAction.ActionKind switch {
-            32 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
-            37 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
-            52 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
+            34 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
+            39 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
+            54 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
             _ => null
         };
         return item is { } id ? ItemPatchMapper.GetPatch(id) : null;
