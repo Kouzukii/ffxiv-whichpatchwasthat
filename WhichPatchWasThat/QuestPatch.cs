@@ -13,7 +13,7 @@ public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
 
         var patchNode = FindPatchNode(journalAccept);
 
-        var questId = ((uint*)journalAccept)[172];
+        var questId = ((uint*)journalAccept)[174];
         var patch = QuestPatchMapper.GetPatch(questId);
         if (patch == null) {
             if (patchNode != null)
@@ -38,8 +38,8 @@ public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
 
         var patchNode = FindPatchNode(journalDetail);
 
-        var questId = ((uint*)journalDetail)[140];
-        var questType = ((uint*)journalDetail)[141];
+        var questId = ((uint*)journalDetail)[142];
+        var questType = ((uint*)journalDetail)[143];
         var patch = QuestPatchMapper.GetPatch(questId);
         if (patch == null || questType != 1) {
             if (patchNode != null)

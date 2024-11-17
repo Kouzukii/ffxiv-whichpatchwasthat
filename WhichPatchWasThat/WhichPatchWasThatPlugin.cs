@@ -18,7 +18,7 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     private unsafe delegate void AddonOnRefresh(AtkUnitBase* addon, uint valueCount, AtkValue* values);
 
-    [Signature("4C 8B DC 53 41 54 41 56 48 81 EC 40 01 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4", DetourName = nameof(JournalDetailOnRefreshDetour))]
+    [Signature("4C 8B DC 53 41 54 41 56 48 81 EC 30 01 00 00 48 8B 05 ?? ?? ?? ?? 48 33 C4", DetourName = nameof(JournalDetailOnRefreshDetour))]
     private readonly Hook<AddonOnRefresh> journalDetailOnRefresh = null!;
 
     public WhichPatchWasThatPlugin(IGameGui gameGui, IAddonLifecycle addonLifecycle, IGameInteropProvider gameInteropProvider, IPluginLog pluginLog) {
