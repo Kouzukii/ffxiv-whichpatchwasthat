@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Dalamud.NET.Sdk/12.0.2">
 
     <PropertyGroup>
         <PlatformTarget>x64</PlatformTarget>
-        <TargetFramework>net8.0-windows</TargetFramework>
+        <TargetFramework>net9.0-windows</TargetFramework>
         <LangVersion>latest</LangVersion>
         <Platform>x64</Platform>
         <Configurations>Release;Debug</Configurations>
@@ -12,7 +12,7 @@
     <!-- Assembly Configuration -->
     <PropertyGroup>
         <AssemblyName>WhichPatchWasThat</AssemblyName>
-        <Version>7.1.5.0</Version>
+        <Version>7.2.0.0</Version>
     </PropertyGroup>
 
     <!-- Build Configuration -->

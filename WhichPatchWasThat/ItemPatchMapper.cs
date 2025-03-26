@@ -2259,7 +2259,8 @@ public static class ItemPatchMapper {
             case >= 44185 and <= 44239:
             case >= 44241 and <= 44250:
             case 44256:
-            case >= 44258 and <= 44268:
+            case >= 44258 and <= 44259:
+            case >= 44261 and <= 44268:
             case >= 44270 and <= 44304:
             case >= 44310 and <= 44322:
             case >= 44324 and <= 44333:
@@ -2299,33 +2300,6 @@ public static class ItemPatchMapper {
             case 43872:
             case >= 44305 and <= 44308:
                 return "7.01";
-            case >= 40452 and <= 40455:
-            case >= 41319 and <= 41321:
-            case >= 41358 and <= 41366:
-            case 41461:
-            case 41813:
-            case 43564:
-            case 43589:
-            case >= 44339 and <= 44490:
-            case >= 44493 and <= 44499:
-            case >= 44502 and <= 44506:
-            case >= 44508 and <= 44604:
-            case >= 44640 and <= 44654:
-            case >= 44661 and <= 44720:
-            case >= 44744 and <= 44849:
-            case >= 44865 and <= 44867:
-            case >= 44870 and <= 44887:
-            case >= 44895 and <= 44914:
-            case >= 44925 and <= 44929:
-            case >= 44934 and <= 45017:
-            case >= 45021 and <= 45073:
-            case >= 45079 and <= 45576:
-            case >= 45579 and <= 45590:
-                return "7.1";
-            case >= 44721 and <= 44743:
-            case >= 45019 and <= 45020:
-            case 45577:
-                return "7.11";
             case 40666:
             case 41472:
             case >= 44334 and <= 44338:
@@ -2341,6 +2315,50 @@ public static class ItemPatchMapper {
             case >= 44930 and <= 44933:
             case >= 45074 and <= 45078:
                 return "7.15";
+            case >= 40452 and <= 40455:
+            case >= 41319 and <= 41321:
+            case >= 41358 and <= 41366:
+            case 41461:
+            case 41813:
+            case 43564:
+            case 43589:
+            case >= 44339 and <= 44352:
+            case >= 44365 and <= 44490:
+            case >= 44493 and <= 44497:
+            case 44499:
+            case 44502:
+            case 44506:
+            case >= 44508 and <= 44604:
+            case >= 44640 and <= 44654:
+            case >= 44661 and <= 44666:
+            case >= 44676 and <= 44720:
+            case >= 44744 and <= 44849:
+            case >= 44865 and <= 44867:
+            case >= 44870 and <= 44887:
+            case >= 44895 and <= 44914:
+            case >= 44925 and <= 44929:
+            case >= 44934 and <= 45017:
+            case >= 45021 and <= 45073:
+            case >= 45079 and <= 45570:
+            case >= 45573 and <= 45576:
+            case >= 45579 and <= 45590:
+                return "7.1";
+            case 45018:
+                return "7.16";
+            case >= 44721 and <= 44743:
+            case >= 45019 and <= 45020:
+            case 45577:
+                return "7.11";
+            case 48:
+            case 44260:
+            case >= 44353 and <= 44364:
+            case 44491:
+            case 44498:
+            case 44503:
+            case >= 44668 and <= 44675:
+            case >= 45571 and <= 45572:
+            case >= 45968 and <= 48741:
+                return "7.2";
         }
 
         return null;
