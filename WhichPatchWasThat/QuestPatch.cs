@@ -91,7 +91,6 @@ public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
         patchNode->AlignmentFontType = 0x00;
         patchNode->FontSize = 12;
         patchNode->TextFlags = baseNode->TextFlags;
-        patchNode->TextFlags2 = 0;
         var prev = insertNode->PrevSiblingNode;
         patchNode->AtkResNode.ParentNode = insertNode->ParentNode;
         insertNode->PrevSiblingNode = (AtkResNode*)patchNode;
@@ -106,7 +105,7 @@ public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
     public void Dispose() {
         unsafe {
             void DisposePatchNode(string addonName) {
-                var atkUnitBase = (AtkUnitBase*)plugin.GameGui.GetAddonByName(addonName);
+                var atkUnitBase = (AtkUnitBase*)plugin.GameGui.GetAddonByName(addonName).Address;
                 if (atkUnitBase == null)
                     return;
                 for (var n = 0; n < atkUnitBase->UldManager.NodeListCount; n++) {
