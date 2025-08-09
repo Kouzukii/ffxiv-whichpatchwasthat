@@ -73,7 +73,7 @@ public class QuestPatch(WhichPatchWasThatPlugin plugin) : IDisposable {
         var componentNode = (AtkComponentNode*)unitBase->GetNodeById(journalCanvasId);
         if (componentNode == null)
             return null;
-        var baseNode = (AtkTextNode*)componentNode->Component->GetTextNodeById(7);
+        var baseNode = componentNode->Component->GetTextNodeById(7);
         if (baseNode == null)
             return null;
         var patchNode = IMemorySpace.GetUISpace()->Create<AtkTextNode>();

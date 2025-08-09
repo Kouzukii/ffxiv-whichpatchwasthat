@@ -34,8 +34,8 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     private unsafe void ActionDetailOnRequestedUpdate(AddonEvent type, AddonArgs args) {
         if (args is not AddonRequestedUpdateArgs requestedUpdateArgs) return;
-        var numberArrayData = ((NumberArrayData**)requestedUpdateArgs.NumberArrayData)[31];
-        var stringArrayData = ((StringArrayData**)requestedUpdateArgs.StringArrayData)[28];
+        var numberArrayData = ((NumberArrayData**)requestedUpdateArgs.NumberArrayData)[32];
+        var stringArrayData = ((StringArrayData**)requestedUpdateArgs.StringArrayData)[29];
         if ((numberArrayData->IntArray[7] & 1) == 0) return;
 
         var seStr = GetTooltipString(stringArrayData, 1);
@@ -59,8 +59,8 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
 
     private unsafe void ItemDetailOnRequestedUpdate(AddonEvent type, AddonArgs args) {
         if (args is not AddonRequestedUpdateArgs requestedUpdateArgs) return;
-        var numberArrayData = ((NumberArrayData**)requestedUpdateArgs.NumberArrayData)[29];
-        var stringArrayData = ((StringArrayData**)requestedUpdateArgs.StringArrayData)[26];
+        var numberArrayData = ((NumberArrayData**)requestedUpdateArgs.NumberArrayData)[30];
+        var stringArrayData = ((StringArrayData**)requestedUpdateArgs.StringArrayData)[27];
         if ((numberArrayData->IntArray[3] & 1) == 0) return;
 
         var seStr = GetTooltipString(stringArrayData, 14);
