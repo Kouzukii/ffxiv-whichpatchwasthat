@@ -7,9 +7,8 @@ using CsvHelper;
 using CsvHelper.Configuration;
 
 var httpClient = new HttpClient();
-var response = await httpClient.GetAsync("https://garlandtools.org/db/doc/core/en/3/data.json");
-var data = JsonSerializer.Deserialize<JsonObject>(await response.Content.ReadAsStringAsync());
-response.Dispose();
+using var allPatchesResponse = await httpClient.GetAsync("https://garlandtools.org/db/doc/core/en/3/data.json");
+var data = JsonSerializer.Deserialize<JsonObject>(await allPatchesResponse.Content.ReadAsStringAsync());
 var patches = data!["patch"]!["partialIndex"]!.AsObject().Select(kv => kv.Key).ToArray();
 
 var itemSet = new HashSet<uint>();
@@ -18,9 +17,8 @@ var questSet = new HashSet<uint>();
 var questClauses = new Dictionary<string, List<(uint start, uint end)>>();
 
 foreach (var patch in patches) {
-    response = await httpClient.GetAsync($"https://garlandtools.org/db/doc/patch/en/2/{patch}.json");
-    data = JsonSerializer.Deserialize<JsonObject>(await response.Content.ReadAsStringAsync());
-    response.Dispose();
+    using var patchResponse = await httpClient.GetAsync($"https://garlandtools.org/db/doc/patch/en/2/{patch}.json");
+    data = JsonSerializer.Deserialize<JsonObject>(await patchResponse.Content.ReadAsStringAsync());
 
     foreach (var (patchName, content) in data!["patch"]!["patches"]!.AsObject()) {
         void Aggregate(string type, IDictionary<string, List<(uint start, uint end)>> dictionary, ISet<uint> set) {
@@ -50,7 +48,7 @@ foreach (var patch in patches) {
             if (last.start != uint.MaxValue)
                 dictionary.Add(patchName, patchClauses);
         }
-        
+
         Aggregate("item", clauses, itemSet);
         Aggregate("quest", questClauses, questSet);
     }
@@ -131,41 +129,54 @@ Simplify(questClauses, questSet);
     await file.WriteLineAsync("}");
 }
 
-response = await httpClient.GetAsync("https://github.com/xivapi/ffxiv-datamining/raw/master/csv/Item.csv");
-using var itemCsv = new CsvReader(new StreamReader(await response.Content.ReadAsStreamAsync()), CultureInfo.InvariantCulture);
+using var itemResponse = await httpClient.GetAsync("https://github.com/xivapi/ffxiv-datamining/raw/master/csv/en/Item.csv");
+using var itemCsv = new CsvReader(new StreamReader(await itemResponse.Content.ReadAsStreamAsync()), CultureInfo.InvariantCulture);
 
 var itemActionMap = new Dictionary<string, string>();
+var glassesAdditionalDataMap = new Dictionary<string, string>();
 
 await foreach (IDictionary<string, object> row in itemCsv.GetRecordsAsync<dynamic>()) {
-    if (row["30"] is not "0") {
-        itemActionMap[(string)row["30"]] = (string)row["key"];
+    if (row["ItemAction"] is not "0") {
+        itemActionMap[(string)row["ItemAction"]] = (string)row["#"];
+    }
+    if (row["ItemAction"] is "2251" && row["AdditionalData"] is not "0") {
+        glassesAdditionalDataMap[(string)row["AdditionalData"]] = (string)row["#"];
     }
 }
 
-response.Dispose();
-
-response = await httpClient.GetAsync("https://github.com/xivapi/ffxiv-datamining/raw/master/csv/ItemAction.csv");
-using var itemActionCsv = new CsvReader(new StreamReader(await response.Content.ReadAsStreamAsync()), new CsvConfiguration(CultureInfo.InvariantCulture));
+using var itemActionResponse = await httpClient.GetAsync("https://github.com/xivapi/ffxiv-datamining/raw/master/csv/en/ItemAction.csv");
+using var itemActionCsv = new CsvReader(new StreamReader(await itemActionResponse.Content.ReadAsStreamAsync()), new CsvConfiguration(CultureInfo.InvariantCulture));
 
 var mounts = new SortedDictionary<ulong, string>();
 var minions = new SortedDictionary<ulong, string>();
 var fashionAccs = new SortedDictionary<ulong, string>();
 
 await foreach (IDictionary<string, object> row in itemActionCsv.GetRecordsAsync<dynamic>()) {
-    if (row["4"] is "20086" && itemActionMap.TryGetValue((string)row["key"], out var itemId)) {
-        fashionAccs[Convert.ToUInt64(row["5"])] = itemId;
+    if (row["Action"] is "20086" && itemActionMap.TryGetValue((string)row["#"], out var itemId)) {
+        fashionAccs[Convert.ToUInt64(row["Data[0]"])] = itemId;
     }
 
-    if (row["4"] is "853" && itemActionMap.TryGetValue((string)row["key"], out itemId)) {
-        minions[Convert.ToUInt64(row["5"])] = itemId;
+    if (row["Action"] is "853" && itemActionMap.TryGetValue((string)row["#"], out itemId)) {
+        minions[Convert.ToUInt64(row["Data[0]"])] = itemId;
     }
 
-    if (row["4"] is "1322" && itemActionMap.TryGetValue((string)row["key"], out itemId)) {
-        mounts[Convert.ToUInt64(row["5"])] = itemId;
+    if (row["Action"] is "1322" && itemActionMap.TryGetValue((string)row["#"], out itemId)) {
+        mounts[Convert.ToUInt64(row["Data[0]"])] = itemId;
     }
 }
 
-response.Dispose();
+using var glassesStyleResponse = await httpClient.GetAsync("https://github.com/xivapi/ffxiv-datamining/raw/master/csv/en/GlassesStyle.csv");
+using var glassesStyleCsv = new CsvReader(new StreamReader(await glassesStyleResponse.Content.ReadAsStreamAsync()), new CsvConfiguration(CultureInfo.InvariantCulture));
+
+var glasses = new SortedDictionary<ulong, string>();
+
+await foreach (IDictionary<string, object> row in glassesStyleCsv.GetRecordsAsync<dynamic>()) {
+    for (var i = 0; i < 12; i++) {
+        if (row[$"Glasses[{i}]"] is not "0" && glassesAdditionalDataMap.TryGetValue((string)row["Glasses[0]"], out var itemId)) {
+            glasses[Convert.ToUInt64(row[$"Glasses[{i}]"])] = itemId;
+        }
+    }
+}
 
 {
     await using var file = File.CreateText("../../../../../WhichPatchWasThat/ActionToItemMapper.cs");
@@ -175,7 +186,7 @@ response.Dispose();
     await file.WriteLineAsync("namespace WhichPatchWasThat;");
     await file.WriteLineAsync();
     await file.WriteLineAsync("public static class ActionToItemMapper {");
-    foreach (var (name, items) in new[] { ("Minion", minions), ("Mount", mounts), ("FashionAccessory", fashionAccs) }) {
+    foreach (var (name, items) in new[] { ("Minion", minions), ("Mount", mounts), ("FashionAccessory", fashionAccs), ("Glasses", glasses) }) {
         await file.WriteLineAsync($"    public static ulong? GetItemOf{name}(ulong id) {{");
         await file.WriteLineAsync("        return id switch {");
 

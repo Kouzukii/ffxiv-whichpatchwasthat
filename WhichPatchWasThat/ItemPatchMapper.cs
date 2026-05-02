@@ -1851,7 +1851,6 @@ public static class ItemPatchMapper {
             case >= 33887 and <= 33912:
                 return "5.5";
             case 42:
-            case 24225:
             case 32238:
             case >= 32804 and <= 32805:
             case 32842:
@@ -2611,8 +2610,103 @@ public static class ItemPatchMapper {
             case >= 47348 and <= 47350:
             case 47352:
             case 47863:
-            case >= 49122 and <= 50852:
+            case 49122:
+            case >= 49172 and <= 49201:
+            case >= 49207 and <= 49786:
+            case >= 49794 and <= 49801:
+            case >= 49803 and <= 49835:
+            case >= 49838 and <= 49847:
+            case >= 49851 and <= 49868:
+            case 50021:
+            case 50082:
+            case 50089:
+            case >= 50252 and <= 50290:
+            case >= 50308 and <= 50313:
+            case 50315:
+            case >= 50319 and <= 50320:
+            case >= 50324 and <= 50326:
+            case 50328:
+            case 50333:
+            case >= 50335 and <= 50336:
+            case >= 50359 and <= 50360:
+            case >= 50423 and <= 50425:
+            case >= 50436 and <= 50437:
+            case >= 50439 and <= 50440:
+            case 50444:
+            case >= 50448 and <= 50449:
+            case >= 50456 and <= 50457:
+            case >= 50460 and <= 50722:
+            case >= 50779 and <= 50802:
+            case >= 50811 and <= 50823:
+            case 50827:
+            case >= 50830 and <= 50846:
+            case >= 50848 and <= 50852:
                 return "7.4";
+            case 48094:
+            case 48147:
+            case >= 49126 and <= 49170:
+            case 49787:
+            case 49802:
+            case >= 49836 and <= 49837:
+            case >= 49848 and <= 49850:
+            case >= 49870 and <= 49872:
+            case >= 49876 and <= 50019:
+            case >= 50032 and <= 50081:
+            case >= 50090 and <= 50251:
+            case >= 50301 and <= 50307:
+            case 50323:
+            case 50334:
+            case >= 50361 and <= 50414:
+            case >= 50426 and <= 50429:
+            case 50435:
+            case >= 50441 and <= 50442:
+            case >= 50445 and <= 50446:
+            case 50450:
+            case 50455:
+            case 50458:
+            case >= 50725 and <= 50726:
+            case 50803:
+            case >= 50806 and <= 50808:
+            case >= 50828 and <= 50829:
+                return "7.41";
+            case 49125:
+            case >= 49788 and <= 49793:
+            case 50020:
+            case >= 50291 and <= 50300:
+            case 50318:
+            case >= 50321 and <= 50322:
+            case 50327:
+            case >= 50337 and <= 50347:
+            case >= 50416 and <= 50422:
+            case >= 50430 and <= 50434:
+            case 50438:
+            case 50443:
+            case 50447:
+            case >= 50451 and <= 50454:
+            case 50459:
+            case >= 50723 and <= 50724:
+            case >= 50804 and <= 50805:
+            case 50824:
+            case 50826:
+            case 50847:
+                return "7.45";
+            case 41498:
+            case 44504:
+            case 44693:
+            case 46791:
+            case 47982:
+            case >= 48199 and <= 48200:
+            case >= 49202 and <= 49206:
+            case 49869:
+            case >= 49873 and <= 49875:
+            case >= 50022 and <= 50031:
+            case >= 50083 and <= 50088:
+            case 50314:
+            case >= 50329 and <= 50332:
+            case >= 50353 and <= 50358:
+            case 50825:
+            case >= 50853 and <= 52660:
+                return "7.5";
         }
 
         return null;

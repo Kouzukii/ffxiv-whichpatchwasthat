@@ -542,8 +542,19 @@ public static class QuestPatchMapper {
                 return "7.35";
             case >= 5229 and <= 5230:
             case 5325:
-            case >= 5425 and <= 5445:
+            case >= 5425 and <= 5440:
+            case >= 5444 and <= 5445:
                 return "7.4";
+            case >= 5448 and <= 5456:
+                return "7.41";
+            case >= 5441 and <= 5442:
+            case >= 5446 and <= 5447:
+            case 5459:
+                return "7.45";
+            case 5443:
+            case >= 5457 and <= 5458:
+            case >= 5464 and <= 5480:
+                return "7.5";
         }
 
         return null;

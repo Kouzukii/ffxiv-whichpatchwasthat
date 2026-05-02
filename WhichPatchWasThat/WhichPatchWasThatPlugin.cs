@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game.Addon.Lifecycle;
 using Dalamud.Game.Addon.Lifecycle.AddonArgTypes;
+using Dalamud.Game.Gui;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
@@ -98,10 +99,11 @@ public class WhichPatchWasThatPlugin : IDalamudPlugin {
     }
 
     private string? GetActionPatch() {
-        var item = (int)GameGui.HoveredAction.ActionKind switch {
-            34 => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionID),
-            39 => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionID),
-            54 => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionID),
+        var item = GameGui.HoveredAction.DetailKind switch {
+            DetailKind.Companion => ActionToItemMapper.GetItemOfMinion(GameGui.HoveredAction.ActionId),
+            DetailKind.Mount => ActionToItemMapper.GetItemOfMount(GameGui.HoveredAction.ActionId),
+            DetailKind.Ornament => ActionToItemMapper.GetItemOfFashionAccessory(GameGui.HoveredAction.ActionId),
+            DetailKind.Glasses => ActionToItemMapper.GetItemOfGlasses(GameGui.HoveredAction.ActionId),
             _ => null
         };
         return item is { } id ? ItemPatchMapper.GetPatch(id) : null;
